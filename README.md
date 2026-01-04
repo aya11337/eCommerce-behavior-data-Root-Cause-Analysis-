@@ -31,5 +31,23 @@ The funnel shows a massive drop-off between viewing a product and adding it to t
 ## 🔍 Root Cause Investigation Strategy
 The following structured checks have been identified to uncover the source of the friction:
 
-### Technical Functionality Audit
-* **Button Rendering:** Investigate if the "Add to Cart" button is failing
+
+  ### Technical Functionality Audit
+* **Button Rendering:** Investigate if the "Add to Cart" button is failing to render on specific browsers or mobile devices.
+* **Interaction Success:** Use session data to identify "rage clicks" where users attempt to add items but the UI fails to respond.
+* **Cart Persistence:** Check for session timeouts or cookie issues that may be clearing carts prematurely.
+
+### Category & Data Integrity
+* **Tracking Gaps:** Verify if the 451 categories with zero ATC activity are missing analytics tags on their specific page templates.
+* **Direct Checkout Analysis:** Investigate if "Buy It Now" or "Apple/Google Pay" buttons are allowing users to bypass the cart, explaining why Purchase > Cart.
+* **Stock Availability:** Check if the low-performing categories consist primarily of "Out of Stock" items where the ATC button is disabled.
+
+---
+
+## 🛠 Tech Stack
+* **Language:** Python 3.11
+* **Libraries:** Pandas, NumPy, KaggleHub
+* **Environment:** Kaggle Notebook / Jupyter
+
+## 📂 Dataset
+The analysis uses the **eCommerce behavior data from multi-category store** dataset, specifically the `2019-Oct.csv` file.
