@@ -1,1 +1,35 @@
-Root Cause Analysis: E-commerce "Add-to-Cart" FrictionProject OverviewThis project investigates a significant drop-off in the customer conversion funnel for an e-commerce platform. While product "views" are high, there is a disproportionately low "Add to Cart" (ATC) rate compared to final "Purchases." The analysis aims to identify whether this is due to technical failures, tracking discrepancies, or user experience barriers.Key Research QuestionsThe ATC Gap: Why are customers viewing products but hesitating to add them to the cart?Funnel Discrepancy: Why are there more unique users purchasing (7,362) than users adding to the cart (4,441)?Category Performance: Why do only 89 out of 540 categories show any ATC activity?Dataset SummaryThe analysis uses the eCommerce behavior data from multi-category store (Oct 2019).Sample Size: 500,000 rows.Total Unique Users: 89,124.Events Tracked: view, cart, purchase.Initial FindingsA preliminary analysis of the event distribution reveals a "broken" funnel:Event TypeCountConversion Rate (%)Unique UsersView481,83396.37%89,108Purchase9,7581.95%7,362Cart8,4091.68%4,441The "Purchase > Cart" ParadoxIn a standard e-commerce flow, ATC counts should exceed Purchase counts. The data shows the opposite, suggesting:Direct Checkout: Users may be using "Buy Now" features that bypass the cart.Tracking Errors: The cart event might not be firing correctly on specific devices or categories.Investigation Strategy1. Technical AuditButton Rendering: Check if the ATC button is hidden or broken on mobile devices.Event Firing: Verify if "rage clicks" are occurring where the UI fails to respond to user input.Persistence: Ensure sessions aren't timing out and clearing carts prematurely.2. Category-Specific AnalysisMissing Tags: Investigate the 451 categories with zero ATC events to see if tracking scripts are missing from those page templates.Stock Levels: Determine if these categories consist of "Out of Stock" items where the ATC button is disabled.3. Data ReconciliationBypassing the Funnel: Analyze if one-click payment methods (Apple Pay, Google Pay) are contributing to the purchase count without triggering a cart event.
+# Root Cause Analysis: E-commerce "Add-to-Cart" Friction
+
+## 📌 Project Overview
+This project investigates a significant bottleneck in the conversion funnel of a multi-category e-commerce store. Initial data exploration revealed a paradox: **Purchase events are outnumbering Add-to-Cart (ATC) events**, and the vast majority of product categories show zero cart activity. 
+
+The goal of this analysis is to determine whether these discrepancies are caused by technical bugs, tracking failures, or specific user UI/UX behaviors (like "Buy It Now" features).
+
+---
+
+## 📊 Key Data Insights
+Based on the analysis of 500,000 events from October 2019:
+
+### 1. The Conversion Funnel
+
+The funnel shows a massive drop-off between viewing a product and adding it to the cart.
+
+| Event Type | Total Count | Conversion Rate | Unique Users |
+| :--- | :--- | :--- | :--- |
+| **View** | 481,833 | 96.37% | 89,108 |
+| **Purchase** | 9,758 | 1.95% | 7,362 |
+| **Cart** | 8,409 | 1.68% | 4,441 |
+
+*Data Source:*
+
+### 2. The "Cart" Paradox
+* **User Discrepancy:** There are **7,362 unique purchasers** but only **4,441 unique users** who added items to a cart.
+* **Category Gap:** Out of **540 unique categories** viewed, only **89 categories** recorded an "Add to Cart" event.
+
+---
+
+## 🔍 Root Cause Investigation Strategy
+The following structured checks have been identified to uncover the source of the friction:
+
+### Technical Functionality Audit
+* **Button Rendering:** Investigate if the "Add to Cart" button is failing
